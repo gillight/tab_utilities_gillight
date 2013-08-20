@@ -216,7 +216,7 @@ tabutils._tabEventListeners = {
     TU_hookCode("gBrowser.mTabProgressListener", /(?=this.mBrowser.missingPlugins)/, function() {
       if (aWebProgress.DOMWindow == this.mBrowser.contentWindow &&
           this.mBrowser.currentURI.spec != "about:blank" &&
-          (!this.mBrowser.lastURI || ["about:blank", "about:home", "about:newtab", BROWSER_NEW_TAB_URL].indexOf(this.mBrowser.lastURI.spec) > -1) &&
+          (!this.mBrowser.lastURI || isBlankPageURL(this.mBrowser.lastURI.spec)) &&
           (!this.mBrowser.__SS_data || !this.mBrowser.__SS_data._tabStillLoading))
         this.mTabBrowser.onLocationChange(this.mTab);
     });
@@ -399,7 +399,6 @@ tabutils._openLinkInTab = function() {
 
   //外来链接
   TU_hookCode("nsBrowserAccess.prototype.openURI", '"browser.link.open_newwindow"', 'isExternal ? "browser.link.open_external" : $&');
-  TU_hookCode("nsBrowserAccess.prototype.openURI", '"browser.tabs.loadDivertedInBackground"', 'isExternal ? "extensions.tabutils.loadForeignInBackground" : $&', "g");
 
   //左键点击链接
   TU_hookCode("contentAreaClick", /.*handleLinkClick.*/g, "if (event.button || event.ctrlKey || event.altKey || event.shiftKey || event.metaKey) $&");
@@ -546,7 +545,7 @@ tabutils._tabOpeningOptions = function() {
   TU_hookCode("gBrowser.addTab",
     ["{", "var lastArg = Object(arguments[arguments.length - 1]);"],
     [/if \(arguments.length == 2[^{}]*\) {[^{}]*}/, "$&" + <![CDATA[
-      if (lastArg.reuseBlank == null ? ["about:blank", "about:home", "about:newtab", BROWSER_NEW_TAB_URL].indexOf(aURI) == -1 : lastArg.reuseBlank) {
+      if (lastArg.reuseBlank == null ? !isBlankPageURL(aURI) : lastArg.reuseBlank) {
         var t = this.getBlankTab();
         if (t) {
           var b = this.getBrowserForTab(t);
@@ -577,10 +576,11 @@ tabutils._tabOpeningOptions = function() {
   };
 
   gBrowser.isBlankBrowser = function isBlankBrowser(aBrowser) {
-    return (!aBrowser.currentURI || ["about:blank", "about:home", "about:newtab", BROWSER_NEW_TAB_URL].indexOf(aBrowser.currentURI.spec) > -1)
+    return (!aBrowser.currentURI || isBlankPageURL(aBrowser.currentURI.spec))
         && (!aBrowser.sessionHistory || aBrowser.sessionHistory.count < 2)
         && (!aBrowser.webProgress || !aBrowser.webProgress.isLoadingDocument);
   };
+  TU_hookCode("isBlankPageURL", 'aURL == "about:blank"', "gInitialPages.indexOf(aURL) > -1");
 
   //自动关闭非主动打开的空白标签页
   TU_hookCode("gBrowser.mTabProgressListener", /(?=var location)/, function() {
@@ -652,6 +652,7 @@ tabutils._tabOpeningOptions = function() {
       ))] // Bug 490225 [Fx11]
     );
   }
+  TU_hookCode("isBlankPageURL", "aURL == BROWSER_NEW_TAB_URL", "$& && TU_getPref('extensions.tabutils.markNewAsBlank', true)");
   TU_hookCode("gBrowser._beginRemoveTab", /.*addTab.*/, "BrowserOpenTab();");
   TU_hookCode("gBrowser._endRemoveTab", /.*addTab.*/, "BrowserOpenTab();");
 
@@ -909,7 +910,7 @@ tabutils._tabClosingOptions = function() {
     }
   }, true);
 
-  TU_hookCode("gBrowser.updateCurrentBrowser", /.*dispatchEvent.*(\n.*_tabAttrModified.*)*/, "$&};if (window.windowState != window.STATE_MINIMIZED) {");
+  TU_hookCode("gBrowser.updateCurrentBrowser", /.*dispatchEvent[\s\S]*_tabAttrModified.*/, "$&};if (window.windowState != window.STATE_MINIMIZED) {");
 
   //Don't close the last primary window with the las tab
   TU_hookCode("gBrowser._beginRemoveTab", /\S*closeWindowWithLastTab\S*(?=;)/, <![CDATA[ //Bug 607893
@@ -3416,6 +3417,15 @@ tabutils._miscFeatures = function() {
           }
         }
         break;
+      case "chrome://clrtabs/skin/prefs.css": // Compat. with ColorfulTabs 17.2
+        for (let j = 0, cssRule; cssRule = styleSheet.cssRules[j]; j++) {
+          switch (cssRule.selectorText) {
+            case "tab.tabbrowser-tab .tab-text.tab-label":
+              cssRule.style.setProperty("color", cssRule.style.getPropertyValue("color"), "");
+              break;
+          }
+        }
+        break;
     }
   }
 };
@@ -3883,7 +3893,7 @@ tabutils._tabPrefObserver = {
     }, true);
 
     //Don't allow drag/dblclick on the tab bar to act on the window
-    if ("TabsInTitlebar" in window) // Compat. with Linux
+    if ("_update" in TabsInTitlebar) // Compat. with Linux
     TU_hookCode("TabsInTitlebar._update", "!this._dragBindingAlive", "$& && TU_getPref('extensions.tabutils.dragBindingAlive', true)");
 
     gPrefService.getChildList("extensions.tabutils.", {}).sort().concat([
@@ -4187,7 +4197,7 @@ tabutils._tabPrefObserver = {
           gBrowser.mTabContainer.mTabstrip._stopSmoothScroll();
           addonBar.parentNode.insertBefore(tabsToolbar, addonBar);
           tabsToolbar.orient = gBrowser.mTabContainer.orient = gBrowser.mTabContainer.mTabstrip.orient = "horizontal";
-          window.TabsInTitlebar && TabsInTitlebar.allowedBy("tabbarposition", false);
+          TabsInTitlebar.allowedBy("tabbarposition", false);
         }
         if (allTabsPopup && allTabsPopup.parentNode.hasAttribute("type")) { //Bug 620081
           allTabsPopup.parentNode.removeAttribute("type");
@@ -4199,7 +4209,7 @@ tabutils._tabPrefObserver = {
           gBrowser.mTabContainer.mTabstrip._stopSmoothScroll();
           appcontent.parentNode.insertBefore(tabsToolbar, appcontent);
           tabsToolbar.orient = gBrowser.mTabContainer.orient = gBrowser.mTabContainer.mTabstrip.orient = "vertical";
-          window.TabsInTitlebar && TabsInTitlebar.allowedBy("tabbarposition", false);
+          TabsInTitlebar.allowedBy("tabbarposition", false);
           gBrowser.mTabContainer.removeAttribute("overflow");
         }
         break;
@@ -4208,7 +4218,7 @@ tabutils._tabPrefObserver = {
           gBrowser.mTabContainer.mTabstrip._stopSmoothScroll();
           appcontent.parentNode.insertBefore(tabsToolbar, appcontent.nextSibling);
           tabsToolbar.orient = gBrowser.mTabContainer.orient = gBrowser.mTabContainer.mTabstrip.orient = "vertical";
-          window.TabsInTitlebar && TabsInTitlebar.allowedBy("tabbarposition", false);
+          TabsInTitlebar.allowedBy("tabbarposition", false);
           gBrowser.mTabContainer.removeAttribute("overflow");
         }
         break;
@@ -4218,7 +4228,7 @@ tabutils._tabPrefObserver = {
           gBrowser.mTabContainer.mTabstrip._stopSmoothScroll();
           gNavToolbox.appendChild(tabsToolbar);
           tabsToolbar.orient = gBrowser.mTabContainer.orient = gBrowser.mTabContainer.mTabstrip.orient = "horizontal";
-          window.TabsInTitlebar && TabsInTitlebar.allowedBy("tabbarposition", true);
+          TabsInTitlebar.allowedBy("tabbarposition", true);
         }
         if (allTabsPopup && allTabsPopup.parentNode.hasAttribute("popup")) {
           allTabsPopup.parentNode.removeAttribute("popup");
@@ -4310,6 +4320,13 @@ tabutils._tabPrefObserver = {
     if (tabutils.gLoadAllInForeground)
       TU_setPref("extensions.tabutils.loadAllInBackground", false);
     document.getElementById("statusbar-loadinforeground").setAttribute("checked", tabutils.gLoadAllInForeground);
+  },
+
+  loadInNewTab: function() {
+    switch (TU_getPref("extensions.tabutils.loadInNewTab")) {
+      case 0: Services.prefs.clearUserPref("browser.newtab.url");break;
+      case 1: TU_setPref("browser.newtab.url", gHomeButton.getHomePage().split("|")[0]);break;
+    }
   },
 
   dragBindingAlive: function() {

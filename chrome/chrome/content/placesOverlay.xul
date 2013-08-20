@@ -4,6 +4,6 @@
   <script type="application/javascript" src="utilityOverlay.js"/>
 
   <commandset id="placesCommands">
-    <command id="placesCmd_open" oncommand="PlacesUIUtils.openNodeWithEvent(PlacesUIUtils.getViewForNode(document.popupNode).selectedNode);"/>
+    <command id="placesCmd_open" oncommand="var view = PlacesUIUtils.getViewForNode(document.popupNode);PlacesUIUtils.openNodeWithEvent(view.selectedNode, event, view);"/>
   </commandset>
 </overlay>

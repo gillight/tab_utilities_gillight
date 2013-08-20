@@ -65,7 +65,7 @@ function TU_hookFunc(aFunc) {
     }
 
     if (typeof newCode == "function" && newCode.length == 0)
-      newCode = newCode.toString().replace(/^.*{|}$/g, "");
+      newCode = newCode.toString().replace(/^.*{|.*}$/g, "");
 
     switch (orgCode) {
       case "{": [orgCode, newCode] = [/{/, "$&\n" + newCode];break;
