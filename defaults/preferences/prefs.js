@@ -16,8 +16,8 @@ pref("extensions.tabutils.openTabNext", 3);
 pref("extensions.tabutils.openTabNext.keepOrder", true);
 pref("extensions.tabutils.openDuplicateNext", true);
 pref("extensions.tabutils.restoreOriginalPosition", true);
-pref("extensions.tabutils.reuseBlank", 1);
-pref("extensions.tabutils.loadInNewTab", 0);
+pref("extensions.tabutils.reuseBlank", 0);
+pref("extensions.tabutils.loadInNewTab", 2);
 
 pref("extensions.tabutils.selectOnClose", 74);
 pref("extensions.tabutils.removeUnintentionalBlank", false);
@@ -69,12 +69,14 @@ pref("extensions.tabutils.mouse.100.oncommand", "");
 
 pref("extensions.tabutils.dragAndGo", false);
 pref("extensions.tabutils.mouseReleaseSelect", true);
+pref("extensions.tabutils.mouseHoverPreview", true);
+pref("extensions.tabutils.mouseHoverPreviewDelay", 250);
+pref("extensions.tabutils.mouseHoverSelect", false);
+pref("extensions.tabutils.mouseHoverSelectDelay", 750);
+pref("extensions.tabutils.mouseHoverLoad", false);
 pref("extensions.tabutils.mouseScrollSelect", false);
 pref("extensions.tabutils.mouseScrollSelectDir", false);
 pref("extensions.tabutils.mouseScrollSelectWrap", false);
-pref("extensions.tabutils.mouseHoverLoad", true);
-pref("extensions.tabutils.mouseHoverPreview", true);
-pref("extensions.tabutils.mouseHoverPreviewDelay", 250);
 
 pref("extensions.tabutils.tabBarPosition", 0);
 pref("extensions.tabutils.closeButtons", 1);
@@ -258,6 +260,11 @@ pref("extensions.tabutils.colorStack.c", "#F88371 20%");
 pref("extensions.tabutils.colorStack.d", "#F8B7B3 20%");
 pref("extensions.tabutils.colorStack.e", "#F8D7DA 20%");
 pref("extensions.tabutils.colorStack.f", "#FFCF6E 20%");
+
+pref("extensions.tabutils.disableVerticalTabs", false);
+pref("extensions.tabutils.disableMultirowTabs", false);
+pref("extensions.tabutils.disablePhantomTabs", false);
+pref("extensions.tabutils.disableTabStacking", false);
 
 pref("browser.tabs.tabMaxWidth", 250);
 pref("browser.tabs.tabMinWidth", 100);

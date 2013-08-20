@@ -20,7 +20,7 @@
                 type="places"
                 place="place:folder=-1"
                 context="placesContext"
-                onclick="if (event.button != 0) return;var node = event.target.node || event.target._placesNode;if (node) if (PlacesUtils.nodeIsURI(node)) gBrowser.selectedTab = event.target.tab || gBrowser.addTab(node.uri);"
+                onclick="if (event.button != 0) return;var node = event.target._placesNode;if (node) if (PlacesUtils.nodeIsURI(node)) gBrowser.selectedTab = event.target.tab || gBrowser.addTab(node.uri);"
                 onpopupshowing="BookmarksEventHandler.onPopupShowing(event);"
                 tooltip="bhTooltip" popupsinherittooltip="true">
         <xul:hbox>
@@ -58,7 +58,6 @@
                      flex="1"
                      xbl:inherits="orient,align,pack,dir">
         <children/>
-        <xul:spacer anonid="spacer" style="pointer-events: none;"/>
       </xul:scrollbox>
       <xul:toolbarbutton class="scrollbutton-down" collapsed="true"
                          xbl:inherits="orient"
@@ -125,9 +124,6 @@
 
       <field name="_pinnedbox">
         document.getElementById("PinnedTabsBarItems")
-      </field>
-      <field name="_spacer">
-        document.getAnonymousElementByAttribute(this, "anonid", "spacer")
       </field>
 
       <method name="_canScrollToElement">

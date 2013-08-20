@@ -65,7 +65,7 @@ function TU_hookFunc(aFunc) {
     }
 
     if (typeof newCode == "function" && newCode.length == 0)
-      newCode = newCode.toString().replace(/^.*{|.*}$/g, "");
+      newCode = newCode.toString().replace(/^.*{|}$/g, "");
 
     switch (orgCode) {
       case "{": [orgCode, newCode] = [/{/, "$&\n" + newCode];break;
@@ -79,23 +79,23 @@ function TU_hookFunc(aFunc) {
   }
 
 //  Cu.reportError(myCode);
-//  myCode = myCode.replace(/^(.*){([\s\S]*)}$/, <![CDATA[
-//    $1 {
-//      try {
-////        switch (arguments.callee.name) {
-////          case "set_selectedTab":
-////            Cu.reportError(arguments.callee.caller.name + '*' + arguments.callee.name + '*' + (val && val._tPos));break;
-////          case "BrowserOpenTab":
-////            Cu.reportError(arguments.callee.caller.name + '*' + arguments.callee.name );break;
-////        }
-//        $2
-//      } catch (e) {
-//        Cu.reportError([arguments.callee.name ,e]);
-//        Cu.reportError(arguments.callee.stack);
-//        Cu.reportError(arguments.callee);
-//      }
+//  myCode = myCode.replace(/(^.*\n?{)([\s\S]*)(}$)/, function(s, s1, s2, s3) (function() {
+//    $1
+//    try {
+////      switch (arguments.callee.name) {
+////        case "set_selectedTab":
+////          Cu.reportError(arguments.callee.caller.name + '*' + arguments.callee.name + '*' + (val && val._tPos));break;
+////        case "BrowserOpenTab":
+////          Cu.reportError(arguments.callee.caller.name + '*' + arguments.callee.name );break;
+////      }
+//      $2
+//    } catch (e) {
+//      Cu.reportError([arguments.callee.name ,e]);
+//      Cu.reportError(arguments.callee.stack);
+//      Cu.reportError(arguments.callee);
 //    }
-//  ]]>);
+//    $3
+//  }).toString().replace(/^.*{|}$/g, "").replace("$1", s1).replace("$2", s2).replace("$3", s3));
 
   return eval("(" + myCode + ")");
 }

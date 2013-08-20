@@ -18,6 +18,10 @@
 <overlay id="tabutils-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script type="application/javascript" src="tulib.js"/>
   <script type="application/javascript" src="tabutils.js"/>
+  <script type="application/javascript" src="tabutils-pt.js"/>
+  <script type="application/javascript" src="tabutils-mt.js"/>
+  <script type="application/javascript" src="tabutils-vt.js"/>
+  <script type="application/javascript" src="tabutils-st.js"/>
   <script type="application/javascript">
   <![CDATA[
     TU_hookCode("goDoCommand", /.*doCommand.*/, "$& else {let cmd = top.document.getElementById(arguments[1]);if (cmd) cmd.doCommand();}");
@@ -319,7 +323,7 @@
     <menupopup id="tabStackPopup"
                onpopupshowing="gBrowser.updateTabStackPopup(event.target);"
                oncommand="gBrowser.selectedTab = gBrowser.mTabs[event.originalTarget.value];"
-               onclick="if (event.button > 0) {var item = event.originalTarget, tab = gBrowser.mTabs[item.value]; gBrowser.removeTab(tab); if (!tab.closing) return; while (item = item.nextSibling) item.value--; this.removeChild(event.originalTarget);}"/>
+               onclick="if (event.button > 0) {var item = event.originalTarget, tab = gBrowser.mTabs[item.value]; gBrowser.removeTab(tab); if (tab.parentNode) return; while (item = item.nextSibling) item.value--; this.removeChild(event.originalTarget);}"/>
 
     <menupopup id="undoCloseTabPopup"
                onpopupshowing="return tabutils.populateUndoSubmenu(event.target);"
