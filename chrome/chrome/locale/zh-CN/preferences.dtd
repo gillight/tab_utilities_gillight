@@ -37,6 +37,7 @@
 <!ENTITY loadInBackground.caption "激活来自以下项目的新标签页:">
 <!ENTITY loadInBackground.label "一般链接">
 <!ENTITY loadDivertedInBackground.label "新窗口链接">
+<!ENTITY loadForeignInBackground.label "外来链接">
 <!ENTITY loadUrlInBackground.label "地址栏">
 <!ENTITY loadSearchInBackground.label "搜索栏">
 <!ENTITY loadNewInBackground.label "新建标签页">
@@ -65,6 +66,7 @@
 <!ENTITY openNewWindow.caption "链接打开位置">
 <!ENTITY openNewWindow.label "新窗口链接打开到:">
 <!ENTITY openExternal.label "外来链接打开到:">
+<!ENTITY openNewWindow.0.label "默认">
 <!ENTITY openNewWindow.1.label "当前标签页">
 <!ENTITY openNewWindow.2.label "新窗口">
 <!ENTITY openNewWindow.3.label "新标签页">
@@ -107,6 +109,7 @@
 <!ENTITY mouseScrollSelect.label "鼠标滚轮激活标签页">
 <!ENTITY mouseScrollSelectDir.label "反转滚动方向">
 <!ENTITY mouseScrollSelectWrap.label "循环选择标签页">
+<!ENTITY mouseHoverPreview.label "鼠标悬停预览标签页, 延时">
 <!ENTITY tabBarFeatures.caption "标签栏特性">
 <!ENTITY tabBarPosition.0.label "顶部">
 <!ENTITY tabBarPosition.1.label "底部">
@@ -146,6 +149,7 @@
 <!ENTITY highlightOutline.label "轮廓线:">
 <!ENTITY highlightColor.label "前景色:">
 <!ENTITY highlightBgColor.label "背景色:">
+<!ENTITY highlightOpacity.label "透明度:">
 <!ENTITY tabWidth.label "标签页宽度:">
 <!ENTITY tabHeight.label "标签页高度:">
 <!ENTITY to.label "到">

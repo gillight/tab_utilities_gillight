@@ -13,11 +13,3 @@ style     chrome://global/content/customizeToolbar.xul              chrome://tab
 
 locale tabutils en-US jar:chrome/tabutils.jar!/chrome/locale/en-US/
 locale tabutils zh-CN jar:chrome/tabutils.jar!/chrome/locale/zh-CN/
-locale tabutils zh-TW jar:chrome/tabutils.jar!/chrome/locale/zh-TW/
-locale tabutils pl jar:chrome/tabutils.jar!/chrome/locale/pl/
-locale tabutils pt-BR jar:chrome/tabutils.jar!/chrome/locale/pt-BR/
-locale tabutils de jar:chrome/tabutils.jar!/chrome/locale/de/
-locale tabutils es-ES jar:chrome/tabutils.jar!/chrome/locale/es-ES/
-locale tabutils ru jar:chrome/tabutils.jar!/chrome/locale/ru/
-locale tabutils ja-JP jar:chrome/tabutils.jar!/chrome/locale/ja-JP/
-locale tabutils it jar:chrome/tabutils.jar!/chrome/locale/it/

@@ -78,6 +78,7 @@ function TU_hookFunc(aFunc) {
     myCode = myCode.replace(orgCode, newCode);
   }
 
+//  Cu.reportError(myCode);
 //  myCode = myCode.replace(/^(.*){([\s\S]*)}$/, <![CDATA[
 //    $1 {
 //      try {
@@ -99,8 +100,12 @@ function TU_hookFunc(aFunc) {
   return eval("(" + myCode + ")");
 }
 
-if (!window.gPrefService)
-  gPrefService = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+if (!("gPrefService" in window)) {
+  __defineGetter__("gPrefService", function() {
+    delete gPrefService;
+    return gPrefService = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+  });
+}
 
 function TU_getPref(aPrefName, aDefault) {
   switch (gPrefService.getPrefType(aPrefName)) {

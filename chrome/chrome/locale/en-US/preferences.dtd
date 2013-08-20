@@ -37,6 +37,7 @@
 <!ENTITY loadInBackground.caption "Focus new tabs from:">
 <!ENTITY loadInBackground.label "Links">
 <!ENTITY loadDivertedInBackground.label "Diverted windows">
+<!ENTITY loadForeignInBackground.label "Foreign links">
 <!ENTITY loadUrlInBackground.label "Address bar">
 <!ENTITY loadSearchInBackground.label "Search bar">
 <!ENTITY loadNewInBackground.label "New Tab">
@@ -64,7 +65,8 @@
 <!ENTITY handleCtrlArrow.label "Ctrl+Left/Right Arrow to navigate tabs in sequential order">
 <!ENTITY openNewWindow.caption "Open links in:">
 <!ENTITY openNewWindow.label "Open new-window links in:">
-<!ENTITY openExternal.label "Open links from external applications in:">
+<!ENTITY openExternal.label "Open links from foreign applications in:">
+<!ENTITY openNewWindow.0.label "Default">
 <!ENTITY openNewWindow.1.label "Current Tab">
 <!ENTITY openNewWindow.2.label "New Window">
 <!ENTITY openNewWindow.3.label "New Tab">
@@ -107,6 +109,7 @@
 <!ENTITY mouseScrollSelect.label "Mouse scroll to focus a tab">
 <!ENTITY mouseScrollSelectDir.label "Invert scrolling direction">
 <!ENTITY mouseScrollSelectWrap.label "Wrap when reaching ends of the tab bar">
+<!ENTITY mouseHoverPreview.label "Mouse hover to preview a tab with a delay of">
 <!ENTITY tabBarFeatures.caption "Tab bar features">
 <!ENTITY tabBarPosition.0.label "Top">
 <!ENTITY tabBarPosition.1.label "Bottom">
@@ -146,6 +149,7 @@
 <!ENTITY highlightOutline.label "Outline:">
 <!ENTITY highlightColor.label "Color:">
 <!ENTITY highlightBgColor.label "Background:">
+<!ENTITY highlightOpacity.label "Opacity:">
 <!ENTITY tabWidth.label "Tab width:">
 <!ENTITY tabHeight.label "Tab height:">
 <!ENTITY to.label "to">

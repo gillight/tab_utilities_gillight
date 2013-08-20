@@ -110,11 +110,8 @@
 
           pinnedbox.__defineSetter__("place", function(val) {
             let view = this.parentNode.parentNode._placesView;
-            if (view) {
+            if (view)
               view.uninit();
-              if (view._controller) //Fx 4.0 - 6.0
-                view._viewElt.controllers.removeController(view._controller);
-            }
 
             new PinnedTabsBar(val);
             return val;
