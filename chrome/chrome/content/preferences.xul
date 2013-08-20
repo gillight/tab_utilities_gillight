@@ -568,7 +568,7 @@
           <groupbox>
             <caption label="&tabBarFeatures.caption;"/>
             <hbox align="center">
-              <checkbox preference="autoHide" label="&showTabBar.label;"/>
+              <checkbox preference="autoHide" label="showTabBar.label;"/>
               <menulist preference="tabBarPosition" value="0">
                 <menupopup>
                   <menuitem value="0" label="&tabBarPosition.0.label;"/>
@@ -892,7 +892,7 @@
     <menupopup id="settingsPopup" position="before_start">
       <menuitem label="&settings.import;" oncommand="onImport();"/>
       <menuitem label="&settings.export;" oncommand="onExport();"/>
-      <menuitem label="&advancedJS.label;" oncommand="openDialog('about:config?filter=extensions.tabutils.', '', 'chrome,titlebar,toolbar,centerscreen,dialog=no,resizable').focus();"/>
+      <menuitem label="advancedJS.label;" oncommand="openDialog('about:config?filter=extensions.tabutils.', '', 'chrome,titlebar,toolbar,centerscreen,dialog=no,resizable').focus();"/>
       <menuseparator/>
       <menuitem label="&settings.default;" oncommand="onDefault();"/>
       <menuitem label="&settings.suggest;" oncommand="onSuggest();"/>

@@ -22,7 +22,8 @@ window[v6="true"] #closetab-button {
 }
 
 window[v6="true"] #undoclosetab-button {
-  list-style-image: url("resource://app/chrome/browser/skin/classic/browser/Toolbar.png");
+/*	list-style-image: url("resource://app/chrome/browser/skin/classic/browser/Toolbar.png");*/
+	list-style-image: url("chrome://tabutils/skin/toolbar_undoclose.png");
 }
 
 /* Statusbar buttons */
